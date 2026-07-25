@@ -1,0 +1,1 @@
+bot de python basado en gemini que ayudara en un futuro a guiarte en cualquier proyecto de programacion sin darte el codigo limpio si no que te hace entender el codigo por lo tanto aprendes y sabes que estas programando
