@@ -5,30 +5,30 @@ from dotenv import load_dotenv
 from google import genai
 
 
-#*............................................................................................./
+#! tokens/Api's
 load_dotenv()
 token_discord = os.getenv("token_bot")
 token_IA = os.getenv("token_gemini")
 
+ai_client = genai.Client(api_key=token_IA)
+
 intents = discord.Intents.default()
 intents.message_content = True
 
-client = discord.Client(intents=intents)
+bot = commands.Bot(command_prefix="/", intents=intents)
+#*  EVENTOS.........................................................................
 
-@client.event
-async def on_ready():
-    print(f'We have logged in as {client.user}')
+#*  COMANDOS........................................................................./
+#! comando $hello
+@bot.command()
+async def hello(ctx):
+    await ctx.send('Hello!')
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
-#*............................................................................................./
-
-
+@bot.command(name='ia')
+async def ia(ctx, *, pregunta):
+    command_ia = ai_client.models.generate_content(model ="gemini-3.5-flash", contents = pregunta)
+    await ctx.send(command_ia.text)
+    #*............................................................................................./
 
 
-client.run(token_discord)
+bot.run(token_discord)
