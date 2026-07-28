@@ -3,6 +3,7 @@ import os
 from discord.ext import commands
 from dotenv import load_dotenv
 from google import genai
+import requests
 
 
 #! tokens/Api's
@@ -26,7 +27,10 @@ async def hello(ctx):
 
 @bot.command(name='ia')
 async def ia(ctx, *, pregunta):
-    command_ia = ai_client.models.generate_content(model ="gemini-2.0-flash", contents = pregunta)
+    command_ia = await ai_client.aio.models.generate_content(
+        model ="gemini-3.6-flash",
+        contents = pregunta
+        )
     await ctx.send(command_ia.text)
     #*............................................................................................./
 
